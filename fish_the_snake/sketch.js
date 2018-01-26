@@ -1,6 +1,6 @@
 function setup() {
     createCanvas(800,800);
-    background(100,250,200);
+    background(100,255,200);
     leszcz = new Snake();
 }
 

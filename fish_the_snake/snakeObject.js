@@ -9,7 +9,6 @@ function Snake() {
 
   //dodaje segment do tablicy, dodany segment ma pozycje ostatniego dodanego segmentu([this.Segments.length-1]) - kierunek(speed) pomożony przez wielkość(size)
   this.addSegment = function(){
-    print("added");
     append(this.Segments,
           [this.Segments[this.Segments.length-1][0]+(this.xspeed*this.speed)],
           [this.Segments[this.Segments.length-1][1]+(this.yspeed*this.speed)]);
