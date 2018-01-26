@@ -9,14 +9,13 @@ function Snake() {
 
   //dodaje segment do tablicy, dodany segment ma pozycje ostatniego dodanego segmentu([this.Segments.length-1]) - kierunek(speed) pomożony przez wielkość(size)
   this.addSegment = function(){
-    print("added");
-    append(this.Segments,
-          [this.Segments[this.Segments.length-1][0]+(this.xspeed*this.speed)],
-          [this.Segments[this.Segments.length-1][1]+(this.yspeed*this.speed)]);
+    append(
+      this.Segments,
+        [this.Segments[this.Segments.length-1][0]+(this.xspeed*this.speed)],
+        [this.Segments[this.Segments.length-1][1]+(this.yspeed*this.speed)]);
   }
 //poruszanie pierwszego segmentu, oraz kopiowanie kolejnych segmentów od końca
   this.update = function(){
-    this.tailEating();
     this.changeDir();
     this.Segments[0][0] += this.xspeed*this.speed;
     this.Segments[0][1] += this.yspeed*this.speed;
@@ -38,23 +37,7 @@ function Snake() {
     this.yspeed = y;
   }
 
-  this.segmentsTouching = function(seg1,seg2){
-    if (seg1[0] + this.size > seg2[0] && seg1[0] < seg2[0] + this.size &&
-        seg1[1] + this.size > seg2[1] && seg1[1] < seg2[1] + this.size){
-          return true;
-        } else {
-          return false;
-        }
-      }
-  this.tailEating = function(){
-    if(this.Segments.length > 10){
-      for(let i = 10; i<this.Segments.length;i++){
-        if (this.segmentsTouching(this.Segments[0],this.Segments[i])) {
-          this.Segments = this.Segments.slice(0,i);
-        }
-      }
-    }
-  }
+
   this.timeFromLastTurn = function(time){
     if(millis() - time < 90){
       return false;
