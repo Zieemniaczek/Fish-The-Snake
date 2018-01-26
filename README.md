@@ -1,2 +1,4 @@
-# Leszcz-The-Snake
+# Fish-The-Snake
 Basic snake game
+
+
