@@ -26,9 +26,11 @@ itemColision = function(snake,itemsArray){
   for(let i =0; i<itemsArray.length;i++){
     if(snake.areSegmentsTouching(snake.Segments[0],itemsArray[i].coords)){
       snake.addSegments(itemsArray[i].value);
+      itemsSetup(itemsArray,1,itemsArray[i].value) //dodaje nowy przedmiot na plansze
+      ui.incrementPoints(1);
       const index = itemsArray.indexOf(itemsArray[i]);
-      if (index !== -1) { //usuwanie przedmiotu z listy
-        itemsArray.splice(index, 1);
+      if (index !== -1) {
+        itemsArray.splice(index, 1); //usuwanie przedmiotu z listy
       }
     }
   }

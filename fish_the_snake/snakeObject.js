@@ -49,11 +49,24 @@ function Snake() {
       }
 
 
+this.isTouchingBorder = function(){
+  if(this.Segments[0][0] + this.size >= width ||
+     this.Segments[0][1] + this.size >= height ||
+     this.Segments[0][0] <= 0 ||
+     this.Segments[0][1] <= 0){
+       return true;
+     } else {
+       return false;
+     }
+
+}
+
   this.tailEating = function(){
     if(this.Segments.length > 10){
       for(let i = 10; i<this.Segments.length;i++){
         if (this.areSegmentsTouching(this.Segments[0],this.Segments[i])) {
-          this.Segments = this.Segments.slice(0,i);
+          //this.Segments = this.Segments.slice(0,i); //skracanie ogona
+          return true;
         }
       }
     }
