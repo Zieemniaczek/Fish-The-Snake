@@ -1,5 +1,7 @@
 # Fish-The-Snake
 Basic snake game
+
+Doesn't work on firefox
 ## How to play
 1. Download the repository
 2. Extract ZIP
