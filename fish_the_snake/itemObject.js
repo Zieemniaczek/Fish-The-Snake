@@ -1,5 +1,5 @@
 function Item(value){
-  this.size = 20;
+  this.size = leszcz.size;
   this.coords = [random(0,width-this.size),random(0,height-this.size)];
   this.value = value;
   this.draw = function(){
@@ -25,7 +25,8 @@ itemsDraw= function(array){
 itemColision = function(snake,itemsArray){
   for(let i =0; i<itemsArray.length;i++){
     if(snake.areSegmentsTouching(snake.Segments[0],itemsArray[i].coords)){
-      snake.addSegments(itemsArray[i].value);
+      snake.segmentsInDebt+=itemsArray[i].value;
+      print(leszcz.segmentsInDebt);
       itemsSetup(itemsArray,1,itemsArray[i].value) //dodaje nowy przedmiot na plansze
       ui.incrementPoints(1);
       const index = itemsArray.indexOf(itemsArray[i]);

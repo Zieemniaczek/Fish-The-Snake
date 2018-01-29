@@ -5,7 +5,6 @@ function gameLevel(){
   itemsDraw(vodka);
   leszcz.update();
   leszcz.draw();
-  frameRate(50)
 }
 
 function UI(){
@@ -44,7 +43,7 @@ function mainMenu(){
   text("don't eat your tail",width/2,height/2);
   text("don't go outside the board",width/2,height/2+20);
   text("hit space to play",width/2,height/2+60);
-  text("have fun :)",width/2,height/2+80);
+  text("have fun :3",width/2,height/2+80);
 }
 
 function startGame(HaveGameAlreadyStarted){
@@ -56,7 +55,7 @@ function startGame(HaveGameAlreadyStarted){
 }
 
 function isGameLost(){
-  if (leszcz.isTouchingBorder() || leszcz.tailEating()) {
+  if (leszcz.isTouchingBorder() || leszcz.tailEating()) {//1==2){
     return true;
   } else {
     //print("not lost")
@@ -69,10 +68,11 @@ function endingScreen(){
   textAlign(CENTER);
   textStyle(ITALIC);
   textSize(20)
-  text("you lost but it doesn't matter",width/2,height/2-20);
-  text("you will die anyway",width/2,(height/2));
-  text("_______________",width/2,height/2-8)
-  text("you can always start again by pressing space :>",width/2,height/2+20)
+  text("you have lost",width/2,height/2-30)
+  text("but it doesn't matter",width/2,height/2-10);
+  text("you will die anyway",width/2,(height/2+10));
+  text("_______________",width/2,height/2+2)
+  text("you can always start again by pressing space :>",width/2,height/2+30)
   if(startGame() == true){
     setup();
     return 1;
