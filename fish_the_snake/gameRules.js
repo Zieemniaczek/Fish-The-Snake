@@ -1,8 +1,8 @@
 function gameLevel(){
   background(100,250,200);
   ui.show();
-  vodka = itemColision(leszcz,vodka);//
-  itemsDraw(vodka);
+  vodka.itemColision(leszcz);
+  vodka.draw();
   leszcz.update();
   leszcz.draw();
 }
