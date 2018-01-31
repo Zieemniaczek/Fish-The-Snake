@@ -6,7 +6,7 @@ function setup() {
     leszcz = new Snake();
     ui = new UI();
     vodka = new Items(5);//ustalenie wartośći
-    vodka.addItems(4);
+    vodka.addItems(5);
     level = 0;
     time = 0;
     gameStarted = false;//umożliwia stworzenie przerwy między kliknięciem a rozpoczęciem gry (kwestia estetyczna)

@@ -10,10 +10,48 @@ function Item(){
 function Items(value){
   this.items = [];
   this.value = value;
+  this.minDistanceBetweenItems = 150;
 
+  this.areTwoItemsInProximity = function(item1,item2,x){
+    if (item1.x + item1.size + x > item2.x && item1.x  < item2.x + item2.size + x &&
+        item1.y + item1.size + x > item2.y && item1.y < item2.y + item2.size + x ){
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+
+//dodaje przedmiot, potem sprawdza czy pokrywa się z którymś z segmentów węża jeżeli tak to usuwa, a potem sprawdza czy nie jest zbyt blisko innych przedmiotów
+//jeżeli w tablicy nie ma żadnych przedmiotów to dodaje go bez sprawdzania
   this.addItems = function(amount){
-    for(let i = 0; i < amount; i+=1){
+    if(this.items.length == 0){
       this.items.push(new Item());
+      amount -=1;
+    }
+    index = 0;
+    while(index < amount){
+
+      this.items.push(new Item());
+
+      for(i=0; i<leszcz.Segments.length; i++){
+        if(leszcz.areSegmentsTouching(this.items[this.items.length-1],leszcz.Segments[i])){
+          print("hehe");
+          this.items.pop();
+          index--;
+          break;
+        }
+      }
+
+      for(i=0;i<this.items.length-1;i++){
+        if(this.areTwoItemsInProximity(this.items[this.items.length-1],this.items[i],this.minDistanceBetweenItems)){
+          print("xD");
+          this.items.pop();
+          index--;
+          break;
+        }
+      }
+      index++;
     }
   }
   this.draw = function(){
