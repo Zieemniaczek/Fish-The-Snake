@@ -1,39 +1,77 @@
-function Item(value){
+function Item(){
   this.size = leszcz.size;
-  this.coords = [random(0,width-this.size),random(0,height-this.size)];
-  this.value = value;
+  this.x = random(0,width-this.size);
+  this.y = random(0,height-this.size);
   this.draw = function(){
     fill(255,200,100);
-    rect(this.coords[0],this.coords[1],this.size,this.size)
+    rect(this.x,this.y,this.size,this.size);
   }
 }
-//tworzy tablice nowych przedmiotów
-itemsSetup = function(array,amount,value){
-  for(let i =0; i<amount;i++){
-    array.push(new Item(value));
-  }
-}
-//rysuje tablce przedmiotów
-itemsDraw= function(array){
-  for(let i =0; i<array.length;i++){
-    array[i].draw();
-  }
-}
+function Items(value){
+  this.items = [];
+  this.value = value;
+  this.minDistanceBetweenItems = 150;
 
+  this.areTwoItemsInProximity = function(item1,item2,x){
+    if (item1.x + item1.size + x > item2.x && item1.x  < item2.x + item2.size + x &&
+        item1.y + item1.size + x > item2.y && item1.y < item2.y + item2.size + x ){
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+
+//dodaje przedmiot, potem sprawdza czy pokrywa się z którymś z segmentów węża jeżeli tak to usuwa, a potem sprawdza czy nie jest zbyt blisko innych przedmiotów
+//jeżeli w tablicy nie ma żadnych przedmiotów to dodaje go bez sprawdzania
+  this.addItems = function(amount){
+    if(this.items.length == 0){
+      this.items.push(new Item());
+      amount -=1;
+    }
+    index = 0;
+    while(index < amount){
+
+      this.items.push(new Item());
+
+      for(i=0; i<leszcz.Segments.length; i++){
+        if(leszcz.areSegmentsTouching(this.items[this.items.length-1],leszcz.Segments[i])){
+          print("hehe");
+          this.items.pop();
+          index--;
+          break;
+        }
+      }
+
+      for(i=0;i<this.items.length-1;i++){
+        if(this.areTwoItemsInProximity(this.items[this.items.length-1],this.items[i],this.minDistanceBetweenItems)){
+          print("xD");
+          this.items.pop();
+          index--;
+          break;
+        }
+      }
+      index++;
+    }
+  }
+  this.draw = function(){
+    for(let i = 0; i<this.items.length; i+=1){
+      this.items[i].draw();
+    }
+  }
 //sprawdza czy przedmiot zderza się z głową węża, jeżeli tak to usuwa przedmiot z tablicy
-//wiem, chujowo zaimplementowane ale nie wiedziałem jak zmienić zawartość tablicy w innym obiekcie więc musze ją zwracać i zawsze zamieniać
-itemColision = function(snake,itemsArray){
-  for(let i =0; i<itemsArray.length;i++){
-    if(snake.areSegmentsTouching(snake.Segments[0],itemsArray[i].coords)){
-      snake.segmentsInDebt+=itemsArray[i].value;
-      print(leszcz.segmentsInDebt);
-      itemsSetup(itemsArray,1,itemsArray[i].value) //dodaje nowy przedmiot na plansze
-      ui.incrementPoints(1);
-      const index = itemsArray.indexOf(itemsArray[i]);
-      if (index !== -1) {
-        itemsArray.splice(index, 1); //usuwanie przedmiotu z listy
+  this.itemColision = function(snake){
+    for(let i =0; i<this.items.length;i++){
+      if(snake.areSegmentsTouching(snake.Segments[0],this.items[i])){
+        snake.segmentsToAdd+=this.value;
+        print(leszcz.segmentsToAdd);
+        this.addItems(1) //dodaje nowy przedmiot na plansze
+        ui.incrementPoints(1);
+        const index = this.items.indexOf(this.items[i]);
+        if (index !== -1) {
+          this.items.splice(index, 1); //usuwanie przedmiotu z listy
+        }
       }
     }
   }
-return itemsArray;
 }
