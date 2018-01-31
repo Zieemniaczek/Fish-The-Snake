@@ -3,30 +3,36 @@ function setup() {
     frameRate(60);
     createCanvas(800,600);
     background(100,255,200);
-    leszcz = new Snake();
+
+    snake1 = new Snake();
     ui = new UI();
-    vodka = new Items(5);//ustalenie wartośći
-    vodka.addItems(5);
+    square = new Items(5);//ustalenie wartośći
     level = 0;
     time = 0;
-    gameStarted = false;//umożliwia stworzenie przerwy między kliknięciem a rozpoczęciem gry (kwestia estetyczna)
+    isGameRunning = false;//umożliwia stworzenie przerwy między kliknięciem a rozpoczęciem gry (kwestia estetyczna)
+
+    square.addItems(5);
 }
 
+
 function draw() {
-  if (level == 1){
-    gameLevel();
-    if (isGameLost() == true){
-      gameStarted = false;
-      level = 2;
-    }
-  } else if (level == 0){
-    level = showMainMenu(level);
-  } else if (level == 2){
-    level = endingScreen(level);
+  switch(level){
+    case 0:
+      showMainMenu();
+      break;
+
+    case 1:
+      gameLevel();
+      isGameLost();
+      break;
+
+    case 2:
+      endingScreen();
+      break;
   }
 }
 
-function mouseClicked(){
-  leszcz.segmentsToAdd+=1000;
+/*function mouseClicked(){
+  snake1.segmentsToAdd+=1000;
   ui.points += 100;
-}
+}*/

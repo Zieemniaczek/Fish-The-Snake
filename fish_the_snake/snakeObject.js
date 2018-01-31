@@ -3,8 +3,10 @@ function Segment(x,y){
   this.y = y;
   this.isOnTurn = false;
   this.size = 25;
+  this.color = color(108, 122, 137);
   this.draw = function(){
-    fill(0,0,0);
+    fill(this.color);
+    stroke(this.color);//220,50,50)
     rect(this.x,this.y,this.size,this.size);
   }
 }
@@ -116,23 +118,23 @@ this.isTouchingBorder = function(){
     //zmienia kierunek poruszania,this.time słóży do sprawiania że nie można skręcić przed upływem pewnego czasu
     //this.Segments[1].isOnTurn = true mówi o tym że segment jest podczas skręcania i trzeba go zawsze wyświetlić  this.time = 0;
   this.changeDir = function(){
-    if(keyIsPressed && this.delayBetweenTurns(this.time)){
-      if( keyCode == DOWN_ARROW && this.yspeed == 0 ){
+    if(this.delayBetweenTurns(this.time)){
+      if(keyIsDown(DOWN_ARROW) && this.yspeed == 0 ){
         this.direction(0,1);
         this.time = millis()
         this.Segments[1].isOnTurn = true;
       }
-      else if( keyCode == UP_ARROW && this.yspeed == 0 ){
+      else if( keyIsDown(UP_ARROW) && this.yspeed == 0 ){
         this.direction(0,-1);
         this.time = millis()
         this.Segments[1].isOnTurn = true;
       }
-      else if( keyCode == LEFT_ARROW && this.xspeed == 0 ){
+      else if(keyIsDown(LEFT_ARROW) && this.xspeed == 0 ){
         this.direction(-1,0);
         this.time = millis()
         this.Segments[1].isOnTurn = true;
       }
-      else if( keyCode == RIGHT_ARROW && this.xspeed == 0 ){
+      else if(keyIsDown(RIGHT_ARROW) && this.xspeed == 0 ){
         this.direction(1,0);
         this.time = millis()
         this.Segments[1].isOnTurn = true;

@@ -1,10 +1,17 @@
 function gameLevel(){
   background(100,250,200);
+  square.itemColision(snake1);
+  square.draw();
+  snake1.update();
+  snake1.draw();
   ui.show();
-  vodka.itemColision(leszcz);
-  vodka.draw();
-  leszcz.update();
-  leszcz.draw();
+}
+
+function textConfig(size){
+  fill(103, 65, 114);
+  strokeWeight(0);
+  textStyle(ITALIC);
+  textSize(size);
 }
 
 function UI(){
@@ -13,31 +20,27 @@ function UI(){
     this.points+=value;
   }
   this.show = function(){
-    fill(210, 82, 120);
-    textStyle(ITALIC);
+    textConfig(16);
     textAlign(LEFT);
-    textSize(16);
     text("points: " + this.points,5,15);
   }
 }
 
-function showMainMenu(level){
-  mainMenu();
-  if (startGame(gameStarted) == true ){ //mechanizm czekania 5 sekund aby zmienić poziom
-    if (gameStarted == false){
+
+function showMainMenu(){
+  mainMenuText();
+  if (startGame()){ //mechanizm czekania 5 sekund aby zmienić poziom
+    if (isGameRunning == false){
       time = millis();
     }
-    gameStarted = true;
-    if (millis() - time > 1000 ) {
-      return 1;
+    isGameRunning = true;
+    if (millis() - time > 500 ) {
+      level =  1;
     }
   }
-  return 0;
 }
-function mainMenu(){
-  fill(210, 82, 120);
-  textStyle(ITALIC);
-  textSize(20);
+function mainMenuText(){
+  textConfig(20);
   text("welcome in the best snake game",width/2,height/2-40);
   text("collect yellow squares",width/2,height/2-20);
   text("don't eat your tail",width/2,height/2);
@@ -46,8 +49,8 @@ function mainMenu(){
   text("have fun :3",width/2,height/2+80);
 }
 
-function startGame(HaveGameAlreadyStarted){
-  if(HaveGameAlreadyStarted || (keyIsPressed && keyCode == 32)){
+function startGame(){
+  if(isGameRunning || (keyIsPressed && keyCode == 32)){
     return true;
   } else {
     return false;
@@ -55,19 +58,15 @@ function startGame(HaveGameAlreadyStarted){
 }
 
 function isGameLost(){
-  if (leszcz.isTouchingBorder() || leszcz.tailEating()) {//1==2){
-    return true;
-  } else {
-    //print("not lost")
-    return false;
+  if (snake1.isTouchingBorder() || snake1.tailEating()) {//1==2){
+    isGameRunning = false;
+    level = 2;
   }
 }
 
 function endingScreen(){
-  fill(210, 82, 120);
+  textConfig(20);
   textAlign(CENTER);
-  textStyle(ITALIC);
-  textSize(20)
   text("you have lost",width/2,height/2-30)
   text("but it doesn't matter",width/2,height/2-10);
   text("you will die anyway",width/2,(height/2+10));
@@ -75,7 +74,6 @@ function endingScreen(){
   text("you can always start again by pressing space :>",width/2,height/2+30)
   if(startGame() == true){
     setup();
-    return 1;
+    level = 1;
   }
-  return 2;
 }
